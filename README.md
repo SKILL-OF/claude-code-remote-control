@@ -8,7 +8,7 @@ A session's Remote Control tunnel is per-session and per-account. After a login 
 
 ## Why a guardian is required
 
-`/remote-control` presents an interactive menu. An agent running it on its own session risks getting stuck in the menu and losing its turn. The guardian pattern externalizes the interaction: a separate agent (e.g., rabbit) drives the command on each subject agent's terminal via meta-harness tools (wmux terminal_send, terminal_read).
+`/remote-control` presents an interactive menu. An agent running it on its own session risks getting stuck in the menu and losing its turn. The guardian pattern externalizes the interaction: a separate agent (for example, a dispatcher) drives the command on each subject agent's terminal via meta-harness tools (wmux terminal_send, terminal_read).
 
 ---
 
@@ -81,7 +81,7 @@ Run after every login dance (account switch). All sessions lose harness visibili
 
 Also run when:
 - An agent reports it cannot be found via ListAgents
-- Victor cannot reach an agent on phone/web
+- The operator cannot reach an agent on phone/web
 - Remote Control shows "Previously Connected" stale state
 
 ---
@@ -89,8 +89,8 @@ Also run when:
 ## Priority order for recovery
 
 Recover in this order:
-1. The guardian agent itself (rabbit or equivalent) — must be harness-visible to coordinate others
-2. The coordinator (MERIDIAN or equivalent) — needs harness visibility to manage subagents
+1. The guardian agent itself (a dispatcher or equivalent) — must be harness-visible to coordinate others
+2. The coordinator (a coordinator agent or equivalent) — needs harness visibility to manage subagents
 3. Active subagents with ongoing work
 4. Idle agents (can wait)
 
@@ -98,4 +98,4 @@ Recover in this order:
 
 ## Relation to login dance
 
-This procedure is the final step of every login dance. See `SKILL-OF/claude-code-account-login` for the full dance state machine. The `/remote-control` recovery runs at state `RemoteControlRecovery` in both Flow A and Flow B of that machine.
+This procedure is the final step of every login dance. The full dance state machine is part of the account-switch login procedure, which is not public. The `/remote-control` recovery runs at state `RemoteControlRecovery` in both Flow A and Flow B of that procedure.
